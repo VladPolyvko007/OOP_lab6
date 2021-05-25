@@ -1,0 +1,94 @@
+#include <iostream>
+#define SIZE 10
+
+using namespace std;
+
+template <class StackType>
+
+class stack
+{
+    StackType* stck[SIZE]; // Містить елементи стека.
+    int tos; // Індекс вершини стека.
+public:
+    stack() { tos = 0; } // Ініціалізує стек.
+    void push(StackType ob); // Заштовхує об'єкт у стек.
+    StackType pop(); // Виштовхує об'єкт зі стека.
+    void print_stack();
+    int amount_of_elem();
+};
+
+template <class StackType>
+
+void stack<StackType>::push(StackType ob)
+{
+    if (tos == SIZE)
+    {
+        cout << "Стек повний.\n";
+        return;
+    }
+    stck[tos] = new StackType(ob);
+    tos++;
+}
+
+template <class StackType> 
+
+StackType stack<StackType>::pop()
+{
+    StackType x;
+    if (tos == 0) 
+    { 
+        cout << "Стек порожній.\n"; 
+        return 0; 
+    }
+    tos--;
+    x = *stck[tos];
+    delete stck[tos];
+    return x;
+}
+
+template <class StackType>
+
+void stack<StackType>::print_stack()
+{
+    int n = tos - 1;
+    for (; n >= 0; n--)
+    {
+        cout << *stck[n] << "\n";
+    }
+}
+
+template <class StackType>
+
+int stack<StackType>::amount_of_elem()
+{
+    return tos;
+}
+
+int main()
+{
+    system("chcp 1251");
+    stack<string> chs1; 
+    stack<char> chs2;
+    int i;
+    chs1.push("str"); chs1.push("elements"); chs1.push("amount");
+    chs2.push('x'); chs2.push('y'); chs2.push('z');
+    chs1.print_stack(); 
+    cout << "Amount of elements:" << chs1.amount_of_elem() << endl;
+    cout << "pop chs1: " << chs1.pop() << "\n";
+    chs1.print_stack();
+    cout << "Amount of elements:" << chs1.amount_of_elem() << endl;
+    chs2.print_stack();
+    for (i = 0; i < 3; i++) cout << "pop chs2: " << chs2.pop() << "\n";
+    stack<double> ds1, ds2; // Створюємо два стеки дійсних чисел
+    ds1.push(1.1); ds1.push(3.3); ds1.push(5.5);
+    ds2.push(2.2); ds2.push(4.4); ds2.push(6.6);
+    ds1.print_stack();
+    cout << "Amount of elements:" << ds1.amount_of_elem() << endl;
+    cout << "pop s1: " << ds1.pop() << "\n";
+    cout << "pop s1: " << ds1.pop() << "\n";
+    ds1.print_stack();
+    cout << "Amount of elements:" << ds1.amount_of_elem() << endl;
+    ds2.print_stack();
+    for (i = 0; i < 3; i++) cout << "pop ds2: " << ds2.pop() << "\n";
+    return 0;
+}
